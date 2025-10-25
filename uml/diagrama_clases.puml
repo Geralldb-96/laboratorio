@@ -1,0 +1,51 @@
+@startuml
+' ========================================================
+' Diagrama de Clases - Laboratorio de Sockets
+' Autor: Gerald
+' Descripción: Modelo lógico de clases para Chat y Archivos
+' ========================================================
+
+skinparam backgroundColor #1E1E1E
+skinparam classAttributeIconSize 0
+skinparam classFontColor White
+skinparam classBackgroundColor #2D2D2D
+skinparam arrowColor White
+skinparam classBorderColor #00BFFF
+skinparam shadowing false
+
+package "archivos" #222222 {
+    class ServidorArchivos {
+        +iniciar_servidor()
+        +enviar_archivo(nombre)
+    }
+
+    class ClienteArchivos {
+        +solicitar_archivo(nombre)
+    }
+}
+
+package "chat" #222222 {
+    class ChatServidor {
+        +iniciar_servidor()
+        +manejar_cliente(conn, addr)
+    }
+
+    class ChatCliente {
+        +iniciar_cliente()
+        +recibir_mensajes()
+    }
+}
+
+package "integrador" #222222 {
+    class Integrador {
+        +enviar_mensaje_chat(mensaje)
+        +solicitar_archivo(nombre)
+    }
+}
+
+Integrador --> ChatServidor : "envía mensajes"
+Integrador --> ServidorArchivos : "solicita archivos"
+ChatServidor "1" --> "*" ChatCliente : "comunica"
+ServidorArchivos "1" --> "*" ClienteArchivos : "transfiere archivos"
+
+@enduml

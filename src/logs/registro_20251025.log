@@ -1,0 +1,43 @@
+2025-10-25 09:04:26 - [INFO] - Servidor de archivos escuchando en 0.0.0.0:5000
+2025-10-25 09:06:43 - [ERROR] - No se encontró el archivo /app/data\prueba
+2025-10-25 09:07:36 - [ERROR] - No se encontró el archivo /app/data\prueba.txt
+2025-10-25 09:08:28 - [ERROR] - No se encontró el archivo /app/data\Prueba.txt
+2025-10-25 09:09:52 - [ERROR] - No se encontró el archivo /app/data\Prueba.txt
+2025-10-25 09:10:26 - [ERROR] - No se encontró el archivo /app/data\Prueba.txt
+2025-10-25 09:11:29 - [ERROR] - No se encontró el archivo src/archivos/data\Prueba.txt
+2025-10-25 09:12:53 - [ERROR] - No se encontró el archivo C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\1
+2025-10-25 09:13:04 - [ERROR] - No se encontró el archivo C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\Pureba.tct
+2025-10-25 09:13:14 - [INFO] - Archivo enviado al servidor: Prueba.txt
+2025-10-25 09:13:14 - [DEBUG] - Conexión establecida con ('127.0.0.1', 63052)
+2025-10-25 09:13:14 - [ERROR] - Opción desconocida: ENVIARPrueba.txt
+2025-10-25 09:13:28 - [DEBUG] - Conexión establecida con ('127.0.0.1', 63053)
+2025-10-25 09:13:28 - [ERROR] - Opción desconocida: DESCARGARPrueba.txt
+2025-10-25 09:13:28 - [INFO] - Archivo descargado: C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\descargado_Prueba.txt
+2025-10-25 09:15:28 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:16:45 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:16:52 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:18:37 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:18:51 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:22:26 - [INFO] - \u2705 Archivo 'Prueba.txt' enviado correctamente.
+2025-10-25 09:22:26 - [DEBUG] - Conexión establecida con ('127.0.0.1', 64237)
+2025-10-25 09:22:26 - [ERROR] - Opción desconocida: ENVIARPrueba.txt
+2025-10-25 09:22:29 - [DEBUG] - Conexión establecida con ('127.0.0.1', 64238)
+2025-10-25 09:22:29 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/Prueba.txt
+2025-10-25 09:22:31 - [ERROR] - Error al descargar archivo: [Errno 22] Invalid argument: 'C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\\descargado_C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/Prueba.txt'
+2025-10-25 09:22:37 - [DEBUG] - Conexión establecida con ('127.0.0.1', 64239)
+2025-10-25 09:22:37 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/descargado_Prueba.txt
+2025-10-25 09:25:27 - [ERROR] - Error al descargar archivo: [Errno 22] Invalid argument: 'C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\\descargado_C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/descargado_Prueba.txt'
+2025-10-25 09:25:33 - [DEBUG] - Conexión establecida con ('127.0.0.1', 51114)
+2025-10-25 09:25:33 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/descargado_Prueba.txt
+2025-10-25 09:26:14 - [DEBUG] - Conexión establecida con ('127.0.0.1', 51125)
+2025-10-25 09:26:14 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/descargado_Prueba.txt
+2025-10-25 09:26:23 - [ERROR] - Error al descargar archivo: [Errno 22] Invalid argument: 'C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\\descargado_C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data/descargado_Prueba.txt'
+2025-10-25 09:26:49 - [DEBUG] - Conexión establecida con ('127.0.0.1', 51133)
+2025-10-25 09:26:49 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/OneDrive/Documentos/09 - Financiera (Análisis).docx
+2025-10-25 09:26:50 - [ERROR] - Error al descargar archivo: [Errno 22] Invalid argument: 'C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\\descargado_C:/Users/Geral/OneDrive/Documentos/09 - Financiera (Análisis).docx'
+2025-10-25 09:27:28 - [DEBUG] - Conexión establecida con ('127.0.0.1', 51143)
+2025-10-25 09:27:28 - [ERROR] - Opción desconocida: DESCARGARC:/Users/Geral/OneDrive/Documentos/09 - Financiera (Análisis).docx
+2025-10-25 09:27:30 - [ERROR] - Error al descargar archivo: [Errno 22] Invalid argument: 'C:/Users/Geral/Documents/Universidad/laboratorio/src/archivos/data\\descargado_C:/Users/Geral/OneDrive/Documentos/09 - Financiera (Análisis).docx'
+2025-10-25 09:28:00 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:29:38 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000
+2025-10-25 09:30:11 - [INFO] - Servidor de archivos escuchando en 127.0.0.1:5000

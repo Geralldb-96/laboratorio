@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  chat_service:
+    build: ./src/chat
+    container_name: chat_service
+    ports:
+      - "6000:6000"
+    networks:
+      - red_sockets
+
+  archivos_service:
+    build: ./src/archivos
+    container_name: archivos_service
+    ports:
+      - "5000:5000"
+    networks:
+      - red_sockets
+
+  integrador:
+    build: ./src/integrador
+    container_name: integrador_service
+    depends_on:
+      - chat_service
+      - archivos_service
+    ports:
+      - "8000:8000"
+    networks:
+      - red_sockets
+    environment:
+      CHAT_HOST: chat_service
+      CHAT_PORT: 6000
+      ARCHIVOS_HOST: archivos_service
+      ARCHIVOS_PORT: 5000
+
+networks:
+  red_sockets:
+    driver: bridge

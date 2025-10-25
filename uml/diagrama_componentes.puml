@@ -1,0 +1,28 @@
+@startuml
+' ========================================================
+' Diagrama de Componentes - Arquitectura con Docker
+' ========================================================
+
+skinparam backgroundColor #1E1E1E
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam component {
+  BackgroundColor #2D2D2D
+  BorderColor #00BFFF
+  FontColor White
+}
+
+title Arquitectura de Comunicación - Sistema de Chat y Archivos
+
+node "Docker Host" {
+    [Chat Service] as Chat <<TCP 6000>>
+    [Archivo Service] as Archivos <<TCP 5000>>
+    [Integrador] as Integrador <<PyQt5 / Flask 8000>>
+}
+
+Integrador --> Chat : Socket TCP
+Integrador --> Archivos : Socket TCP
+Chat --> Chat : Comunicación entre clientes
+Archivos --> Archivos : Transferencia binaria
+
+@enduml

@@ -1,0 +1,8 @@
+PyQt5==5.15.11       # Si usas GUI; si no, cámbialo por Flask
+flask==3.0.3         # Si quieres también ofrecer una interfaz web
+pillow==11.0.0       # Imágenes, íconos o visualización en GUI
+requests==2.32.3     # Conectarse a chat o archivos vía HTTP o sockets
+cryptography==43.0.3 # Cifrado básico de mensajes o archivos
+python-dotenv==1.0.1 # Variables de entorno para host/puertos
+colorama==0.4.6      # Consola legible en ejecución
+pytest==8.3.3        # Pruebas unitarias

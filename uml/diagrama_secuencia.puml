@@ -1,0 +1,34 @@
+@startuml
+' ========================================================
+' Diagrama de Secuencia - Flujo de Comunicación
+' ========================================================
+
+skinparam backgroundColor #1E1E1E
+skinparam sequence {
+  ArrowColor White
+  ActorBorderColor #00BFFF
+  LifeLineBorderColor #00BFFF
+  LifeLineBackgroundColor #2D2D2D
+  ParticipantBorderColor #00BFFF
+  ParticipantBackgroundColor #2D2D2D
+  ParticipantFontColor White
+}
+
+actor Usuario
+
+participant "Integrador" as I
+participant "Servicio de Chat" as C
+participant "Servicio de Archivos" as A
+
+== Flujo de mensaje de chat ==
+Usuario -> I : escribe mensaje
+I -> C : enviar_mensaje_chat(mensaje)
+C -> C : retransmite a otros clientes
+
+== Flujo de solicitud de archivo ==
+Usuario -> I : solicita archivo(nombre)
+I -> A : solicitar_archivo(nombre)
+A --> I : archivo recibido
+I --> Usuario : confirma recepción
+
+@enduml
