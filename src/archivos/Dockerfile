@@ -1,13 +1,8 @@
 FROM python:3.11-slim
-
 WORKDIR /app
-
-COPY requirements.txt .
+COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-# Puerto del servidor de archivos (TCP)
+RUN mkdir -p /app/data
 EXPOSE 5000
-
 CMD ["python", "servidor_archivos.py"]
+

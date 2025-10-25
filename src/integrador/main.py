@@ -1,34 +1,36 @@
-from integrador import INTERFAZ_MODE, LOG_LEVEL
-from colorama import Fore, Style, init
+from flask import Flask, jsonify, request
+import socket
 
-init(autoreset=True)
+CHAT_HOST = "chat"
+CHAT_PORT = 6000
+ARCHIVOS_HOST = "archivos"
+ARCHIVOS_PORT = 5000
+BUFFER_SIZE = 1024
 
-if INTERFAZ_MODE == "GUI":
-    from PyQt5.QtWidgets import QApplication
-    from integrador.gui import VentanaIntegrador
-    import sys
+app = Flask(__name__)
 
-    print(Style.BRIGHT + Fore.CYAN + "Iniciando en modo GUI...")
-    app = QApplication([])
-    ventana = VentanaIntegrador()
-    ventana.show()
-    sys.exit(app.exec_())
+@app.route("/")
+def index():
+    return jsonify({"status": "Integrador activo", "services": ["chat", "archivos"]})
 
-elif INTERFAZ_MODE == "API":
-    from flask import Flask, jsonify, request
-    from integrador.comunicacion import enviar_mensaje_chat, solicitar_archivo
+@app.route("/chat", methods=["POST"])
+def enviar_mensaje_chat():
+    mensaje = request.json.get("mensaje", "Hola desde integrador")
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((CHAT_HOST, CHAT_PORT))
+        s.sendall(mensaje.encode())
+    return jsonify({"status": f"Mensaje enviado al chat: {mensaje}"})
 
-    app = Flask(__name__)
+@app.route("/archivo", methods=["POST"])
+def enviar_archivo():
+    nombre = request.json.get("nombre", "Prueba.txt")
+    contenido = request.json.get("contenido", "Archivo de prueba desde integrador")
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((ARCHIVOS_HOST, ARCHIVOS_PORT))
+        s.send(b"ENVIAR")
+        s.send(nombre.encode())
+        s.sendall(contenido.encode())
+    return jsonify({"status": f"Archivo {nombre} cargado correctamente"})
 
-    @app.route("/chat", methods=["POST"])
-    def chat():
-        data = request.json
-        mensaje = data.get("mensaje", "")
-        enviar_mensaje_chat(mensaje)
-        return jsonify({"status": "Mensaje enviado"})
-
-    @app.route("/archivo", methods=["GET"])
-    def archivo():
-        nombre = request.args.get("nombre")
-        solicitar_archivo(nombre)
-        return jsonify({"status": f"Arch
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=7000)

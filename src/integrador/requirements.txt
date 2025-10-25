@@ -6,3 +6,4 @@ cryptography==43.0.3 # Cifrado básico de mensajes o archivos
 python-dotenv==1.0.1 # Variables de entorno para host/puertos
 colorama==0.4.6      # Consola legible en ejecución
 pytest==8.3.3        # Pruebas unitarias
+Flask==3.1.2
