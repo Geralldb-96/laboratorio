@@ -1,50 +1,63 @@
 import socket
 import os
-from __init__ import ARCHIVOS_HOST, ARCHIVOS_PORT, DIRECTORIO_ARCHIVOS  # ✅ import directo
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from archivos import ARCHIVOS_PORT, DIRECTORIO_ARCHIVOS
+from src.utils.logger import log
 
-BUFFER_SIZE = 1024
-os.makedirs(DIRECTORIO_ARCHIVOS, exist_ok=True)
 
-def manejar_cliente(conn, addr):
-    print(f"[ARCHIVOS] Conexión de {addr}")
-    comando = conn.recv(BUFFER_SIZE).decode()
-    nombre = conn.recv(BUFFER_SIZE).decode()
+BUFFER_SIZE = 4096
 
-    if comando == "ENVIAR":
-        ruta = os.path.join(DIRECTORIO_ARCHIVOS, nombre)
-        with open(ruta, "wb") as f:
-            while True:
-                data = conn.recv(BUFFER_SIZE)
-                if not data:
-                    break
-                f.write(data)
-        print(f"[ARCHIVOS] Archivo recibido: {ruta}")
-
-    elif comando == "DESCARGAR":
-        ruta = os.path.join(DIRECTORIO_ARCHIVOS, nombre)
-        if not os.path.exists(ruta):
-            conn.send(b"ERROR")
-            print(f"[ARCHIVOS] Archivo no encontrado: {ruta}")
-            return
-        conn.send(b"OK")
-        with open(ruta, "rb") as f:
-            while True:
-                data = f.read(BUFFER_SIZE)
-                if not data:
-                    break
-                conn.sendall(data)
-        print(f"[ARCHIVOS] Archivo enviado: {nombre}")
-
-    conn.close()
 
 def iniciar_servidor():
+    """Inicia el servidor de archivos y espera conexiones para upload/download."""
+    HOST = "0.0.0.0"  # Escuchar en todas las interfaces dentro del contenedor
+    log(f"Servidor de archivos escuchando en {HOST}:{ARCHIVOS_PORT}", "INFO")
+
+    # Crear socket TCP reutilizable
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((ARCHIVOS_HOST, ARCHIVOS_PORT))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((HOST, ARCHIVOS_PORT))
         s.listen(5)
-        print(f"[ARCHIVOS] Servidor escuchando en {ARCHIVOS_HOST}:{ARCHIVOS_PORT}")
+
         while True:
             conn, addr = s.accept()
-            manejar_cliente(conn, addr)
+            log(f"Conexión establecida con {addr}", "INFO")
+
+            with conn:
+                data = conn.recv(BUFFER_SIZE).decode("utf-8")
+                if not data:
+                    continue
+
+                # Espera comandos tipo "UPLOAD:archivo.txt" o "DOWNLOAD:archivo.txt"
+                partes = data.split(":", 1)
+                if len(partes) != 2:
+                    conn.send("ERROR: Comando inválido".encode("utf-8"))
+                    continue
+
+                comando, nombre_archivo = partes
+                archivo_path = os.path.join(DIRECTORIO_ARCHIVOS, nombre_archivo.strip())
+
+                if comando == "UPLOAD":
+                    with open(archivo_path, "wb") as f:
+                        while True:
+                            chunk = conn.recv(BUFFER_SIZE)
+                            if not chunk:
+                                break
+                            f.write(chunk)
+                    log(f"Archivo recibido: {nombre_archivo}", "INFO")
+
+                elif comando == "DOWNLOAD":
+                    if os.path.exists(archivo_path):
+                        with open(archivo_path, "rb") as f:
+                            conn.sendfile(f)
+                        log(f"Archivo enviado: {nombre_archivo}", "INFO")
+                    else:
+                        conn.send("ERROR: Archivo no encontrado.".encode("utf-8"))
+
+                else:
+                    conn.send("ERROR: Comando desconocido.".encode("utf-8"))
+
 
 if __name__ == "__main__":
     iniciar_servidor()

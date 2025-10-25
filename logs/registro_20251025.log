@@ -1,0 +1,37 @@
+2025-10-25 16:59:00 - [INFO] - Servidor de archivos escuchando en 0.0.0.0:5000
+2025-10-25 17:04:54 - [INFO] - Conexión establecida con ('127.0.0.1', 59066)
+2025-10-25 17:04:54 - [INFO] - Conexión establecida con ('127.0.0.1', 59067)
+2025-10-25 17:04:55 - [INFO] - Conexión establecida con ('127.0.0.1', 59069)
+2025-10-25 17:05:00 - [INFO] - Conexión establecida con ('127.0.0.1', 59074)
+2025-10-25 17:05:00 - [INFO] - Conexión establecida con ('127.0.0.1', 59075)
+2025-10-25 17:05:08 - [INFO] - Conexión establecida con ('127.0.0.1', 59076)
+2025-10-25 17:05:31 - [INFO] - Conexión establecida con ('127.0.0.1', 59092)
+2025-10-25 17:05:31 - [INFO] - Conexión establecida con ('127.0.0.1', 59093)
+2025-10-25 17:05:38 - [INFO] - Conexión establecida con ('127.0.0.1', 59094)
+2025-10-25 17:06:31 - [INFO] - Conexión establecida con ('127.0.0.1', 59107)
+2025-10-25 17:06:31 - [INFO] - Conexión establecida con ('127.0.0.1', 59108)
+2025-10-25 17:06:38 - [INFO] - Conexión establecida con ('127.0.0.1', 59109)
+2025-10-25 17:11:31 - [INFO] - Conexión establecida con ('127.0.0.1', 62549)
+2025-10-25 17:11:32 - [INFO] - Conexión establecida con ('127.0.0.1', 62550)
+2025-10-25 17:12:07 - [INFO] - Conexión establecida con ('127.0.0.1', 62561)
+2025-10-25 17:21:32 - [INFO] - Conexión establecida con ('127.0.0.1', 61585)
+2025-10-25 17:21:32 - [INFO] - Conexión establecida con ('127.0.0.1', 61586)
+2025-10-25 17:21:35 - [INFO] - Conexión establecida con ('127.0.0.1', 61587)
+2025-10-25 17:27:13 - [INFO] - \U0001f680 Iniciando servidor de chat en 0.0.0.0:6000
+2025-10-25 17:27:13 - [INFO] - \U0001f4ac Servidor de chat esperando conexiones...
+2025-10-25 17:31:58 - [INFO] - \U0001f680 Iniciando servidor de chat en 0.0.0.0:6000
+2025-10-25 17:31:58 - [INFO] - \U0001f4ac Servidor de chat esperando conexiones...
+2025-10-25 17:33:37 - [INFO] - \U0001f6f0\ufe0f Conectando al servidor de chat en localhost:6000...
+2025-10-25 17:33:37 - [INFO] - \u2705 Conectado al servidor de chat.
+2025-10-25 17:33:38 - [INFO] - Cliente conectado desde ('127.0.0.1', 50243)
+2025-10-25 17:33:44 - [INFO] - Mensaje recibido de ('127.0.0.1', 50243): hola mundo
+2025-10-25 17:51:32 - [INFO] - Conexión establecida con ('127.0.0.1', 59234)
+2025-10-25 17:51:32 - [INFO] - Conexión establecida con ('127.0.0.1', 59237)
+2025-10-25 18:21:32 - [INFO] - Conexión establecida con ('127.0.0.1', 52235)
+2025-10-25 18:21:33 - [INFO] - Conexión establecida con ('127.0.0.1', 52237)
+2025-10-25 18:29:14 - [INFO] - \U0001f6f0\ufe0f Conectando al servidor de chat en localhost:6000...
+2025-10-25 18:29:14 - [INFO] - \u2705 Conectado al servidor de chat.
+2025-10-25 18:29:14 - [INFO] - Cliente conectado desde ('127.0.0.1', 62261)
+2025-10-25 18:29:23 - [INFO] - Mensaje recibido de ('127.0.0.1', 62261): hola
+2025-10-25 18:29:32 - [WARNING] - Cliente ('127.0.0.1', 50243) se desconectó abruptamente.
+2025-10-25 18:29:32 - [INFO] - Cliente ('127.0.0.1', 50243) desconectado.

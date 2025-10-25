@@ -1,30 +1,17 @@
-import os
-import socket
-import pytest
-
-HOST = "127.0.0.1"
-PORT = 5000
-ARCHIVO_PRUEBA = "tests/data_test.txt"
-
-@pytest.fixture(scope="module", autouse=True)
-def preparar_archivo():
-    """Crea un archivo temporal para enviar."""
-    os.makedirs("tests", exist_ok=True)
-    with open(ARCHIVO_PRUEBA, "w") as f:
-        f.write("Contenido de prueba")
-    yield
-    os.remove(ARCHIVO_PRUEBA)
-
-def test_envio_archivo():
-    """Prueba de conexión y envío básico."""
+@app.route('/test/archivos')
+def test_archivos():
+    """Verifica conexión TCP con el servicio de archivos"""
     try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((HOST, PORT))
-            s.send(b"ENVIAR")
-            s.send(os.path.basename(ARCHIVO_PRUEBA).encode())
-            with open(ARCHIVO_PRUEBA, "rb") as f:
-                for bloque in iter(lambda: f.read(1024), b""):
-                    s.sendall(bloque)
-        assert True
-    except ConnectionRefusedError:
-        pytest.skip("Servidor de archivos no está ejecutándose.")
+        with socket.create_connection((ARCHIVOS_HOST, ARCHIVOS_PORT), timeout=3):
+            return jsonify({
+                "status": "ok",
+                "service": "archivos_service",
+                "message": f"Conexión TCP exitosa a {ARCHIVOS_HOST}:{ARCHIVOS_PORT}"
+            }), 200
+    except Exception as e:
+        logging.error(f"Error conectando con archivos_service: {e}")
+        return jsonify({
+            "status": "error",
+            "service": "archivos_service",
+            "message": str(e)
+        }), 500

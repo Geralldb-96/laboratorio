@@ -1,5 +1,15 @@
+version: "3.9"
+
 services:
-  chat:
+  archivos_service:
+    build: ./src/archivos
+    container_name: archivos_service
+    ports:
+      - "5000:5000"
+    networks:
+      - laboratorio_net
+
+  chat_service:
     build: ./src/chat
     container_name: chat_service
     ports:
@@ -7,27 +17,18 @@ services:
     networks:
       - laboratorio_net
 
-  archivos:
-    build: ./src/archivos
-    container_name: archivos_service
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./src/archivos/data:/app/data
-    networks:
-      - laboratorio_net
-
-  integrador:
+  integrador_service:
     build: ./src/integrador
     container_name: integrador_service
-    depends_on:
-      - chat
-      - archivos
     ports:
       - "7000:7000"
+    depends_on:
+      - archivos_service
+      - chat_service
     networks:
       - laboratorio_net
 
 networks:
   laboratorio_net:
     driver: bridge
+

@@ -1,36 +1,89 @@
-from flask import Flask, jsonify, request
+"""
+Módulo: main.py
+Servicio integrador — Conecta Chat y Archivos
+-------------------------------------------------
+Expone una API REST con Flask para verificar el estado
+y probar la comunicación entre contenedores Docker.
+"""
+
+from flask import Flask, jsonify
 import socket
+import logging
+import os
 
-CHAT_HOST = "chat"
-CHAT_PORT = 6000
-ARCHIVOS_HOST = "archivos"
-ARCHIVOS_PORT = 5000
-BUFFER_SIZE = 1024
+# Configuración de logs
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger(__name__)
 
+# Configuración general
 app = Flask(__name__)
 
+CHAT_HOST = os.getenv("CHAT_HOST", "chat_service")
+CHAT_PORT = int(os.getenv("CHAT_PORT", 6000))
+ARCHIVOS_HOST = os.getenv("ARCHIVOS_HOST", "archivos_service")
+ARCHIVOS_PORT = int(os.getenv("ARCHIVOS_PORT", 5000))
+INTEGRADOR_HOST = os.getenv("INTEGRADOR_HOST", "0.0.0.0")
+INTEGRADOR_PORT = int(os.getenv("INTEGRADOR_PORT", 7000))
+
+
+# ---------------------------------------------
+# Funciones auxiliares
+# ---------------------------------------------
+def probar_conexion(host, port, servicio):
+    """Prueba la conexión TCP con un servicio"""
+    try:
+        with socket.create_connection((host, port), timeout=3):
+            logger.info(f"Conexión exitosa con {servicio} en {host}:{port}")
+            return {"status": "ok", "service": servicio}
+    except Exception as e:
+        logger.error(f"Error conectando con {servicio}: {e}")
+        return {"status": "error", "service": servicio, "message": str(e)}
+
+
+# ---------------------------------------------
+# Rutas de la API
+# ---------------------------------------------
 @app.route("/")
-def index():
-    return jsonify({"status": "Integrador activo", "services": ["chat", "archivos"]})
+def home():
+    return jsonify({"message": "Servicio Integrador activo", "status": "ok"})
 
-@app.route("/chat", methods=["POST"])
-def enviar_mensaje_chat():
-    mensaje = request.json.get("mensaje", "Hola desde integrador")
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((CHAT_HOST, CHAT_PORT))
-        s.sendall(mensaje.encode())
-    return jsonify({"status": f"Mensaje enviado al chat: {mensaje}"})
 
-@app.route("/archivo", methods=["POST"])
-def enviar_archivo():
-    nombre = request.json.get("nombre", "Prueba.txt")
-    contenido = request.json.get("contenido", "Archivo de prueba desde integrador")
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((ARCHIVOS_HOST, ARCHIVOS_PORT))
-        s.send(b"ENVIAR")
-        s.send(nombre.encode())
-        s.sendall(contenido.encode())
-    return jsonify({"status": f"Archivo {nombre} cargado correctamente"})
+@app.route("/status")
+def status():
+    return jsonify({
+        "integrador": "online",
+        "chat_service": f"{CHAT_HOST}:{CHAT_PORT}",
+        "archivos_service": f"{ARCHIVOS_HOST}:{ARCHIVOS_PORT}"
+    })
 
+
+@app.route("/test/chat")
+def test_chat():
+    result = probar_conexion(CHAT_HOST, CHAT_PORT, "chat_service")
+    return jsonify(result), 200 if result["status"] == "ok" else 500
+
+
+
+@app.route("/test/archivos", methods=["GET"])
+def test_archivos():
+    """Prueba de conexión con el servicio de archivos"""
+    try:
+        logging.info(f"Intentando conectar con {ARCHIVOS_HOST}:{ARCHIVOS_PORT} ...")
+        with socket.create_connection((ARCHIVOS_HOST, ARCHIVOS_PORT), timeout=3):
+            return jsonify({"message": f"Conectado a {ARCHIVOS_HOST}", "status": "ok"})
+    except Exception as e:
+        logging.error(f"Error conectando con archivos_service: {e}")
+        return jsonify({
+            "message": str(e),
+            "service": "archivos_service",
+            "status": "error"
+        }), 500
+
+# ---------------------------------------------
+# Ejecución principal
+# ---------------------------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=7000)
+    from waitress import serve
+    logger.info(f"Iniciando Integrador (modo producción) en {INTEGRADOR_HOST}:{INTEGRADOR_PORT}")
+    serve(app, host=INTEGRADOR_HOST, port=INTEGRADOR_PORT)
+
